@@ -1,9 +1,10 @@
 import { Player } from "./Player.js";
 import express, { type Request, type Response } from "express";
 import dotenv from "dotenv";
+import logger from "./logger.js";
 
 // Load environment variables from .env file
-dotenv.config(); 
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,9 +15,9 @@ const INITIAL_LIFE = process.env.INITIAL_LIFE
 // parse json request
 app.use(express.json());
 
-// GET
+// health check when deployed to AWS
 app.get("/health", (req: Request, res: Response) => {
-  res.send("Hello from Express + TypeScript!");
+  res.json({ status: "ok" });
 });
 
 // POST
@@ -45,6 +46,7 @@ app.post("/calculate", (req: Request, res: Response) => {
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Invalid request body format.";
+    logger.error(`Error in /calculate: ${message}`);
     res.status(400).json({
       error: "Bad Request",
       message,
@@ -57,5 +59,5 @@ app.post("/calculate", (req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+  logger.info(`Server running at http://localhost:${PORT}`);
 });
