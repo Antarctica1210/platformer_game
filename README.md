@@ -15,8 +15,7 @@ Before you begin, ensure you have the following installed on your system.
 1.  **Clone the repository:**
 
     ```bash
-    git clone <your-repository-url>
-    cd platformer_game
+    git clone https://github.com/Antarctica1210/platformer_game.git
     ```
 
 2.  **Set up environment variables:**
