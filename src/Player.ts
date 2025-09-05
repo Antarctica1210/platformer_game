@@ -36,9 +36,24 @@ export class Player {
 
     // if speed goes below or equal 0 life minus 1
     if (finalSpeed <= 0) {
-      this.life -= 1;
+      if (this.life > 0) {
+        this.life -= 1;
+      }else{
+        this.life = 0;
+        logger.info("Player's life is 0, Game Over")
+      }
     }
     // Ensure speed doesn't go below zero.
     return Math.max(0, finalSpeed);
   }
+
+  /**
+   * Gets the player's status
+   * @returns The player's life status
+   */
+  get_status() {
+    return {
+      life: this.life,
+    };
+  } 
 }

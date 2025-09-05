@@ -20,7 +20,6 @@ app.get("/health", (req: Request, res: Response) => {
   res.json({ status: "ok" });
 });
 
-// POST
 app.post("/calculate", (req: Request, res: Response) => {
   try {
     const { initialSpeed, inclines } = req.body;
@@ -48,12 +47,7 @@ app.post("/calculate", (req: Request, res: Response) => {
       error instanceof Error ? error.message : "Invalid request body format.";
     logger.error(`Error in /calculate: ${message}`);
     res.status(400).json({
-      error: "Bad Request",
-      message,
-      expectedFormat: {
-        initialSpeed: "number",
-        inclines: "number[]",
-      },
+      error: "Bad Request"
     });
   }
 });
