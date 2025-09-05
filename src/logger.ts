@@ -1,6 +1,7 @@
 import winston from "winston";
+import path from "path";
 
-const { combine, timestamp, printf, colorize, align } = winston.format;
+const { combine, timestamp, printf, colorize, align, json } = winston.format;
 
 // Define the logger configuration
 const logger = winston.createLogger({
@@ -17,7 +18,12 @@ const logger = winston.createLogger({
     printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`)
   ),
   // Define where to send the logs. In this case, only to the console.
-  transports: [new winston.transports.Console()],
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({
+      filename: path.join("log", "combined.log"),
+    }),
+  ],
 });
 
 export default logger;
